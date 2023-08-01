@@ -1,5 +1,7 @@
 package src.app.layout;
 
+import src.core.CoreImpl;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -174,7 +176,28 @@ public class App extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Initializes the event listeners for the buttons in the GUI.
+     */
     public void initEvents() {
+        CoreImpl core = new CoreImpl(jTextArea1, jTable1);
 
+        // run
+        jButton1.addActionListener(e -> core.run());
+
+        // optimize
+        jButton2.addActionListener(e -> core.optimize());
+
+        // clear
+        jButton3.addActionListener(e -> core.clearTextArea());
+
+        // export
+        jButton4.addActionListener(e -> core.export());
+
+        // compare
+        jButton5.addActionListener(e -> core.compare());
+
+        // clear
+        jButton6.addActionListener(e -> core.clearTable());
     }
 }
