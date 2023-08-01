@@ -28,21 +28,12 @@ public class CoreImpl implements Core {
 
         long time;
         long space;
-        LangBase core;
-
-        switch (language) {
-            case "C":
-                core = new CLang(jTextArea.getText());
-                break;
-            case "Java":
-                core = new JavaLang(jTextArea.getText());
-                break;
-            case "Python":
-                core = new PythonLang(jTextArea.getText());
-                break;
-            default:
-                throw new CoreException("Unsupported programming language: " + language);
-        }
+        CoreBase core = switch (language) {
+            case "C" -> new CCore(jTextArea.getText());
+            case "Java" -> new JavaCore(jTextArea.getText());
+            case "Python" -> new PythonCore(jTextArea.getText());
+            default -> throw new CoreException("Unsupported programming language: " + language);
+        };
 
         time = core.computeTime();
         space = core.computeSpace();
@@ -51,7 +42,6 @@ public class CoreImpl implements Core {
         defaultTableModel.fireTableDataChanged();
         ID++;
     }
-
 
     @Override
     public void optimize() {

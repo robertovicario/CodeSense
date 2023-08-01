@@ -11,8 +11,8 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryUsage;
 import java.nio.charset.StandardCharsets;
 
-public class PythonLang extends LangBase {
-    public PythonLang(String code) {
+public class PythonCore extends CoreBase {
+    public PythonCore(String code) {
         super(code);
     }
 

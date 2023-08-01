@@ -1,9 +1,9 @@
 package src.core.lang;
 
-public abstract class LangBase {
+public abstract class CoreBase {
     protected String code;
 
-    public LangBase(String code) {
+    public CoreBase(String code) {
         this.code = code;
     }
 

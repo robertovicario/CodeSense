@@ -95,7 +95,7 @@ public class App extends JFrame {
 
                 },
                 new String [] {
-                        "Timestamp", "Language", "Time", "Space"
+                        "ID", "Language", "Time", "Space"
                 }
         ) {
             final boolean[] canEdit = new boolean [] {
