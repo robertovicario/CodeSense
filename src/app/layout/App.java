@@ -46,7 +46,7 @@ public class App extends JFrame {
         JScrollPane jScrollPane1 = new JScrollPane();
         JScrollPane jScrollPane2 = new JScrollPane();
 
-        jComboBox1.setModel(new DefaultComboBoxModel<>(new String[] {"-", "C", "C++", "Python", "Java"}));
+        jComboBox1.setModel(new DefaultComboBoxModel<>(new String[] {"-", "C", "Java", "Python"}));
 
         jToolBar1.setRollover(true);
 
@@ -169,7 +169,7 @@ public class App extends JFrame {
 
         setTitle("CodeSense");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setMinimumSize(new Dimension(500, 300));
+        setMinimumSize(new Dimension(700, 500));
         setMaximumSize(Toolkit.getDefaultToolkit().getScreenSize());
         pack();
         setLocationRelativeTo(null);
@@ -180,7 +180,7 @@ public class App extends JFrame {
      * Initializes the event listeners for the buttons in the GUI.
      */
     public void initEvents() {
-        CoreImpl core = new CoreImpl(jTextArea1, jTable1);
+        CoreImpl core = new CoreImpl((DefaultComboBoxModel<String>) jComboBox1.getModel(), jTextArea1, (DefaultTableModel) jTable1.getModel());
 
         // run
         jButton1.addActionListener(e -> core.run());
