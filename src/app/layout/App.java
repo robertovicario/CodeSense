@@ -1,6 +1,6 @@
 package src.app.layout;
 
-import src.core.CoreImpl;
+import src.runner.CodeRunnerImpl;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -36,7 +36,7 @@ public class App extends JFrame {
      */
     public void initComponents() {
         JPanel jPanel1 = new JPanel();
-        JLabel jLabel1 = new JLabel("Language:");
+        JLabel jLabel1 = new JLabel("Programming language:");
         JSeparator jSeparator1 = new JSeparator();
         JToolBar jToolBar1 = new JToolBar();
         Box.Filler filler1 = new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(32767, 0));
@@ -46,7 +46,7 @@ public class App extends JFrame {
         JScrollPane jScrollPane1 = new JScrollPane();
         JScrollPane jScrollPane2 = new JScrollPane();
 
-        jComboBox1.setModel(new DefaultComboBoxModel<>(new String[] {"-", "C", "Java", "Python"}));
+        jComboBox1.setModel(new DefaultComboBoxModel<>(new String[] {"-", "Bash", "JavaScript", "Python"}));
 
         jToolBar1.setRollover(true);
 
@@ -95,7 +95,7 @@ public class App extends JFrame {
 
                 },
                 new String [] {
-                        "ID", "Language", "Time", "Space"
+                        "ID", "Language", "Time (MS)", "Space (KB)"
                 }
         ) {
             final boolean[] canEdit = new boolean [] {
@@ -180,7 +180,7 @@ public class App extends JFrame {
      * Initializes the event listeners for the buttons in the GUI.
      */
     public void initEvents() {
-        CoreImpl core = new CoreImpl((DefaultComboBoxModel<String>) jComboBox1.getModel(), jTextArea1, (DefaultTableModel) jTable1.getModel());
+        CodeRunnerImpl core = new CodeRunnerImpl((DefaultComboBoxModel<String>) jComboBox1.getModel(), jTextArea1, (DefaultTableModel) jTable1.getModel());
 
         // run
         jButton1.addActionListener(e -> core.run());

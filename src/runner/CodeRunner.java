@@ -1,6 +1,6 @@
-package src.core;
+package src.runner;
 
-public interface Core {
+public interface CodeRunner {
     void run();
     void optimize();
     void clearTextArea();

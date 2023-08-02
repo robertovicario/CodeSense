@@ -1,9 +1,9 @@
-package src.core.lang;
+package src.runner.lang;
 
-public abstract class CoreBase {
+public abstract class RunnerBase {
     protected String code;
 
-    public CoreBase(String code) {
+    public RunnerBase(String code) {
         this.code = code;
     }
 

@@ -6,14 +6,14 @@ import src.app.layout.App;
 import javax.swing.*;
 
 /**
- * description
+ * The CodeSense class is the entry point of the application.
  *
  * @author Roberto Vicario
  * @version 1.0
  */
 public class CodeSense {
     /**
-     * description
+     * The main method that starts the application.
      *
      * @param args command-line arguments (not used in this application)
      */
