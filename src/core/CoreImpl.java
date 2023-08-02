@@ -1,6 +1,6 @@
-package src.core.runner;
+package src.core;
 
-import src.core.runner.lang.*;
+import src.core.lang.*;
 import src.errors.RunnerException;
 
 import javax.swing.*;
@@ -9,12 +9,12 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * A concrete implementation of the CodeRunner interface.
+ * A concrete implementation of the Core interface.
  *
  * @author Roberto Vicario
  * @version 1.0
  */
-public class RunnerImpl implements Runner {
+public class CoreImpl implements Core {
     private final DefaultComboBoxModel<String> defaultComboBoxModel;
     private final JTextArea jTextArea;
     private final DefaultTableModel defaultTableModel;
@@ -27,7 +27,7 @@ public class RunnerImpl implements Runner {
      * @param jTextArea The text area where the code to be executed is entered.
      * @param defaultTableModel The defaultTableModel model where the results are displayed.
      */
-    public RunnerImpl(DefaultComboBoxModel<String> defaultComboBoxModel, JTextArea jTextArea, DefaultTableModel defaultTableModel) {
+    public CoreImpl(DefaultComboBoxModel<String> defaultComboBoxModel, JTextArea jTextArea, DefaultTableModel defaultTableModel) {
         this.defaultComboBoxModel = defaultComboBoxModel;
         this.jTextArea = jTextArea;
         this.defaultTableModel = defaultTableModel;
@@ -125,15 +125,6 @@ public class RunnerImpl implements Runner {
                 throw new RunnerException(e.getMessage());
             }
         }
-    }
-
-
-    /**
-     * TODO: Implement the comparison logic here
-     */
-    @Override
-    public void compare() {
-        // TODO: Implement the comparison logic here
     }
 
     /**

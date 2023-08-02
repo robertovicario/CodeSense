@@ -1,6 +1,6 @@
 package src.app.layout;
 
-import src.core.runner.RunnerImpl;
+import src.core.CoreImpl;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -18,8 +18,7 @@ public class App extends JFrame {
     private final JButton jButton2 = new JButton("Optimize");
     private final JButton jButton3 = new JButton("Clear");
     private final JButton jButton4 = new JButton("Export");
-    private final JButton jButton5 = new JButton("Compare");
-    private final JButton jButton6 = new JButton("Clear");
+    private final JButton jButton5 = new JButton("Clear");
     private final JTextArea jTextArea1 = new JTextArea();
     private final JTable jTable1 = new JTable();
 
@@ -42,7 +41,6 @@ public class App extends JFrame {
         Box.Filler filler1 = new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(32767, 0));
         JToolBar jToolBar2 = new JToolBar();
         Box.Filler filler2 = new Box.Filler(new Dimension(0, 0), new Dimension(0, 0), new Dimension(32767, 0));
-
         JScrollPane jScrollPane1 = new JScrollPane();
         JScrollPane jScrollPane2 = new JScrollPane();
 
@@ -72,17 +70,12 @@ public class App extends JFrame {
         jButton4.setHorizontalTextPosition(SwingConstants.CENTER);
         jButton4.setVerticalTextPosition(SwingConstants.BOTTOM);
         jToolBar2.add(jButton4);
+        jToolBar2.add(filler2);
 
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(SwingConstants.CENTER);
         jButton5.setVerticalTextPosition(SwingConstants.BOTTOM);
         jToolBar2.add(jButton5);
-        jToolBar2.add(filler2);
-
-        jButton6.setFocusable(false);
-        jButton6.setHorizontalTextPosition(SwingConstants.CENTER);
-        jButton6.setVerticalTextPosition(SwingConstants.BOTTOM);
-        jToolBar2.add(jButton6);
 
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Monospaced", Font.PLAIN, 13));
@@ -180,24 +173,12 @@ public class App extends JFrame {
      * Initializes the event listeners for the buttons in the GUI.
      */
     public void initEvents() {
-        RunnerImpl core = new RunnerImpl((DefaultComboBoxModel<String>) jComboBox1.getModel(), jTextArea1, (DefaultTableModel) jTable1.getModel());
+        CoreImpl core = new CoreImpl((DefaultComboBoxModel<String>) jComboBox1.getModel(), jTextArea1, (DefaultTableModel) jTable1.getModel());
 
-        // run
         jButton1.addActionListener(e -> core.run());
-
-        // optimize
         jButton2.addActionListener(e -> core.optimize());
-
-        // clear
         jButton3.addActionListener(e -> core.clearTextArea());
-
-        // export
         jButton4.addActionListener(e -> core.export());
-
-        // compare
-        jButton5.addActionListener(e -> core.compare());
-
-        // clear
-        jButton6.addActionListener(e -> core.clearTable());
+        jButton5.addActionListener(e -> core.clearTable());
     }
 }

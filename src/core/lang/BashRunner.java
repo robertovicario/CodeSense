@@ -1,4 +1,4 @@
-package src.core.runner.lang;
+package src.core.lang;
 
 import src.errors.LangException;
 
@@ -11,41 +11,41 @@ import java.lang.management.MemoryUsage;
 import java.nio.charset.StandardCharsets;
 
 /**
- * The JavaScriptRunner class is responsible for executing JavaScript code and measuring its performance.
+ * The BashRunner class is responsible for executing Bash code and measuring its performance.
  *
  * @author Roberto Vicario
  * @version 1.0
  */
-public class JavaScriptRunner extends RunnerBase {
+public class BashRunner extends RunnerBase {
 
     /**
-     * Constructs a new JavaScriptRunner object with the specified JavaScript source code.
+     * Constructs a new BashRunner object with the specified Bash source code.
      *
-     * @param code The JavaScript source code to be executed by the runner.
+     * @param code The Bash source code to be executed by the runner.
      */
-    public JavaScriptRunner(String code) {
+    public BashRunner(String code) {
         super(code);
     }
 
     /**
-     * Creates a new Node.js process using the "node" command.
+     * Creates a new Bash process using the "bash" command.
      *
-     * @return The created Node.js process.
+     * @return The created Bash process.
      * @throws IOException If an I/O error occurs while starting the process.
      */
-    private Process createNodeProcess() throws IOException {
-        ProcessBuilder processBuilder = new ProcessBuilder("node");
+    private Process createBashProcess() throws IOException {
+        ProcessBuilder processBuilder = new ProcessBuilder("bash");
         return processBuilder.start();
     }
 
     /**
-     * Executes the JavaScript script in the provided process.
+     * Executes the Bash script in the provided process.
      *
-     * @param process The Node.js process to execute the script in.
+     * @param process The Bash process to execute the script in.
      * @throws IOException If an I/O error occurs while writing the script to the process.
-     * @throws InterruptedException If the execution of the JavaScript script is interrupted.
+     * @throws InterruptedException If the execution of the Bash script is interrupted.
      */
-    private void executeJavaScriptScript(Process process) throws IOException, InterruptedException {
+    private void executeBashScript(Process process) throws IOException, InterruptedException {
         try (OutputStream outputStream = process.getOutputStream();
              PrintWriter writer = new PrintWriter(new OutputStreamWriter(outputStream, StandardCharsets.UTF_8))) {
             writer.println(code);
@@ -53,7 +53,7 @@ public class JavaScriptRunner extends RunnerBase {
     }
 
     /**
-     * Retrieves the used memory by the JVM after the JavaScript script execution.
+     * Retrieves the used memory by the JVM after the Bash script execution.
      *
      * @return The used memory in kilobytes.
      */
@@ -63,21 +63,21 @@ public class JavaScriptRunner extends RunnerBase {
     }
 
     /**
-     * Computes the execution time of the JavaScript code.
+     * Computes the execution time of the Bash code.
      *
-     * @return The execution time of the JavaScript code in milliseconds.
-     * @throws LangException If an error occurs during JavaScript script execution.
+     * @return The execution time of the Bash code in milliseconds.
+     * @throws LangException If an error occurs during Bash script execution.
      */
     public long computeTime() {
         long startTime = System.currentTimeMillis();
 
         try {
-            Process process = createNodeProcess();
-            executeJavaScriptScript(process);
+            Process process = createBashProcess();
+            executeBashScript(process);
 
             int exitCode = process.waitFor();
             if (exitCode != 0) {
-                throw new LangException("JavaScript script execution failed.");
+                throw new LangException("Bash script execution failed.");
             }
 
             long endTime = System.currentTimeMillis();
@@ -88,16 +88,16 @@ public class JavaScriptRunner extends RunnerBase {
     }
 
     /**
-     * Computes the memory usage of the JavaScript code.
+     * Computes the memory usage of the Bash code.
      *
-     * @return The memory usage of the JavaScript code in kilobytes.
-     * @throws LangException If an error occurs during JavaScript script execution.
+     * @return The memory usage of the Bash code in kilobytes.
+     * @throws LangException If an error occurs during Bash script execution.
      */
     public long computeSpace() {
         try {
             Process process;
-            ProcessBuilder processBuilder = new ProcessBuilder("node", "--expose-gc", "-e",
-                    code);
+            ProcessBuilder processBuilder = new ProcessBuilder("bash", "-c",
+                    "echo \"" + code + "\" | bash -x");
             process = processBuilder.start();
             process.waitFor();
 

@@ -1,12 +1,12 @@
-package src.core.runner;
+package src.core;
 
 /**
- * The CodeRunner interface defines methods to run, optimize, and manage code-related tasks.
+ * The Core interface defines methods to run, optimize, and manage code-related tasks.
  *
  * @author Roberto Vicario
  * @version 1.0
  */
-public interface Runner {
+public interface Core {
     /**
      * Runs the code.
      */
@@ -26,11 +26,6 @@ public interface Runner {
      * Exports the code or its results.
      */
     void export();
-
-    /**
-     * Compares the code or its results with expected values.
-     */
-    void compare();
 
     /**
      * Clears the table.
