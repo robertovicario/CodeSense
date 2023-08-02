@@ -1,4 +1,4 @@
-package src.runner;
+package src.core.runner;
 
 /**
  * The CodeRunner interface defines methods to run, optimize, and manage code-related tasks.
@@ -6,7 +6,7 @@ package src.runner;
  * @author Roberto Vicario
  * @version 1.0
  */
-public interface CodeRunner {
+public interface Runner {
     /**
      * Runs the code.
      */

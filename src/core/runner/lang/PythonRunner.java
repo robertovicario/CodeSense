@@ -1,4 +1,4 @@
-package src.runner.lang;
+package src.core.runner.lang;
 
 import src.errors.LangException;
 

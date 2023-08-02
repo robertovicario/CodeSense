@@ -1,10 +1,12 @@
-package src.runner;
+package src.core.runner;
 
-import src.runner.lang.*;
+import src.core.runner.lang.*;
 import src.errors.RunnerException;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * A concrete implementation of the CodeRunner interface.
@@ -12,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Roberto Vicario
  * @version 1.0
  */
-public class CodeRunnerImpl implements CodeRunner {
+public class RunnerImpl implements Runner {
     private final DefaultComboBoxModel<String> defaultComboBoxModel;
     private final JTextArea jTextArea;
     private final DefaultTableModel defaultTableModel;
@@ -23,9 +25,9 @@ public class CodeRunnerImpl implements CodeRunner {
      *
      * @param defaultComboBoxModel The combo box model containing the supported programming languages.
      * @param jTextArea The text area where the code to be executed is entered.
-     * @param defaultTableModel The table model where the results are displayed.
+     * @param defaultTableModel The defaultTableModel model where the results are displayed.
      */
-    public CodeRunnerImpl(DefaultComboBoxModel<String> defaultComboBoxModel, JTextArea jTextArea, DefaultTableModel defaultTableModel) {
+    public RunnerImpl(DefaultComboBoxModel<String> defaultComboBoxModel, JTextArea jTextArea, DefaultTableModel defaultTableModel) {
         this.defaultComboBoxModel = defaultComboBoxModel;
         this.jTextArea = jTextArea;
         this.defaultTableModel = defaultTableModel;
@@ -33,14 +35,13 @@ public class CodeRunnerImpl implements CodeRunner {
 
     /**
      * Runs the code entered the JTextArea using the selected programming language.
-     * The execution time and space are computed, and the results are displayed in a table.
+     * The execution time and space are computed, and the results are displayed in a defaultTableModel.
      *
      * @throws RunnerException If no programming language is selected or the selected language is unsupported.
      */
     @Override
     public void run() {
         String selectedLanguage = defaultComboBoxModel.getSelectedItem().toString();
-
         if (selectedLanguage.equals("-")) {
             throw new RunnerException("Please choose a programming language.");
         }
@@ -58,6 +59,7 @@ public class CodeRunnerImpl implements CodeRunner {
         defaultTableModel.addRow(new String[]{String.valueOf(ID), selectedLanguage, String.valueOf(time), String.valueOf(space)});
         defaultTableModel.moveRow(defaultTableModel.getRowCount() - 1, defaultTableModel.getRowCount() - 1, 0);
         defaultTableModel.fireTableDataChanged();
+
         ID++;
     }
 
@@ -78,12 +80,53 @@ public class CodeRunnerImpl implements CodeRunner {
     }
 
     /**
-     * TODO: Implement the export logic here
+     * This method implements the logic to export data from a JTable to a CSV file.
      */
     @Override
     public void export() {
-        // TODO: Implement the export logic here
+        JFileChooser jFileChooser = new JFileChooser();
+        int userSelection = jFileChooser.showSaveDialog(null);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            String filePath = jFileChooser.getSelectedFile().getAbsolutePath();
+            if (!filePath.toLowerCase().endsWith(".csv")) {
+                filePath += ".csv";
+            }
+
+            try (FileWriter writer = new FileWriter(filePath)) {
+                int rowCount = defaultTableModel.getRowCount();
+                int colCount = defaultTableModel.getColumnCount();
+
+                for (int i = 0; i < colCount; i++) {
+                    writer.append(defaultTableModel.getColumnName(i));
+                    if (i < colCount - 1) {
+                        writer.append(",");
+                    } else {
+                        writer.append("\n");
+                    }
+                }
+
+                for (int row = 0; row < rowCount; row++) {
+                    for (int col = 0; col < colCount; col++) {
+                        Object value = defaultTableModel.getValueAt(row, col);
+                        if (value != null) {
+                            writer.append(value.toString());
+                        }
+                        if (col < colCount - 1) {
+                            writer.append(",");
+                        } else {
+                            writer.append("\n");
+                        }
+                    }
+                }
+
+                JOptionPane.showMessageDialog(null, "Data exported successfully.", getClass().toString(), JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException e) {
+                throw new RunnerException(e.getMessage());
+            }
+        }
     }
+
 
     /**
      * TODO: Implement the comparison logic here
@@ -94,7 +137,7 @@ public class CodeRunnerImpl implements CodeRunner {
     }
 
     /**
-     * Clears the table containing the results of executed code.
+     * Clears the defaultTableModel containing the results of executed code.
      */
     @Override
     public void clearTable() {

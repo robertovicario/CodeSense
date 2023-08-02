@@ -1,6 +1,6 @@
 package src.app.layout;
 
-import src.runner.CodeRunnerImpl;
+import src.core.runner.RunnerImpl;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -180,7 +180,7 @@ public class App extends JFrame {
      * Initializes the event listeners for the buttons in the GUI.
      */
     public void initEvents() {
-        CodeRunnerImpl core = new CodeRunnerImpl((DefaultComboBoxModel<String>) jComboBox1.getModel(), jTextArea1, (DefaultTableModel) jTable1.getModel());
+        RunnerImpl core = new RunnerImpl((DefaultComboBoxModel<String>) jComboBox1.getModel(), jTextArea1, (DefaultTableModel) jTable1.getModel());
 
         // run
         jButton1.addActionListener(e -> core.run());
